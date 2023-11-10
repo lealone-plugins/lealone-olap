@@ -5,19 +5,20 @@
  */
 package org.lealone.sql.query;
 
+import org.lealone.sql.OlapPlugin;
 import org.lealone.sql.operator.OperatorFactoryBase;
 
 public class VOperatorFactory extends OperatorFactoryBase {
 
     public VOperatorFactory() {
-        super("olap");
+        super(OlapPlugin.NAME);
     }
 
     @Override
     public VOperator createOperator(Select select) {
         if (select.isQuickAggregateQuery) {
             return null;
-        } else if (select.isGroupQuery) {
+        } else if (select.isGroupQuery()) {
             if (select.isGroupSortedQuery) {
                 return new VGroupSorted(select);
             } else {
