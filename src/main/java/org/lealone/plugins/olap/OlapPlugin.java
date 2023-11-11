@@ -7,6 +7,7 @@ package org.lealone.plugins.olap;
 
 import java.util.Map;
 
+import org.lealone.db.Plugin;
 import org.lealone.db.PluginBase;
 import org.lealone.db.PluginManager;
 import org.lealone.plugins.olap.query.VOperatorFactory;
@@ -23,13 +24,19 @@ public class OlapPlugin extends PluginBase {
     @Override
     public void init(Map<String, String> config) {
         super.init(config);
-        PluginManager.register(OperatorFactory.class, new VOperatorFactory());
+        PluginManager.register(OperatorFactory.class, new VOperatorFactory(), getName());
     }
 
     @Override
     public void close() {
-        OperatorFactory p = PluginManager.getPlugin(OperatorFactory.class, NAME);
+        OperatorFactory p = PluginManager.getPlugin(OperatorFactory.class, getName());
         if (p != null)
             PluginManager.deregister(OperatorFactory.class, p);
+        super.close();
+    }
+
+    @Override
+    public Class<? extends Plugin> getPluginClass() {
+        return OperatorFactory.class;
     }
 }
