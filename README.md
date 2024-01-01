@@ -26,7 +26,7 @@
 
 ```sql
 create plugin olap
-  implement by 'org.lealone.plugins.olap.OlapPlugin' 
+  implement by 'com.lealone.plugins.olap.OlapPlugin' 
   class path 'E:\lealone\lealone-plugins\olap\target\lealone-olap-plugin-6.0.0.jar';
 ```
 
